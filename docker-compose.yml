@@ -1,0 +1,23 @@
+version: '3'
+
+services:      
+   proxy:
+    container_name: file-serve-proxy
+    image: nginx:latest
+    ports:
+      - '8080:8080'
+
+    volumes:
+        - ./proxy/nginx.conf:/etc/nginx/nginx.conf
+        - ./proxy/certs:/etc/nginx/certs
+        - ./proxy/storage:/etc/nginx/storage
+        
+   file:
+    container_name: file-serve-ui
+    image: filebrowser/filebrowser
+    expose:
+        - '80'
+
+    volumes:
+        - ./proxy/storage:/srv
+        
